@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,300&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="scripts.js" defer></script>
   <title>Conversor de Moedas</title>
@@ -14,57 +13,50 @@
 
 <body>
   <div class="container">
-    <header>
-      <h1>Conversor de Moedas</h1>
-    </header>
-
-    <main>
-      <label>
-        Converter <b>de</b>
-        <select>
-          <option>
-            R$ Real brasileiro
-          </option>
-        </select>
-      </label>
-
-      <label>
-        Converter <b>para</b>
-        <select id="currency-select">
-          <option>
-            US$ Dólar americano
-          </option>
-          <option>
-            € Euro
-          </option>
-          <option>
-            Ƀ BitCoin
-          </option>
-        </select>
-      </label>
-
-      <label>
-        Valor
-        <input id="input-real" type="number" placeholder="Digite o valor para conversão">
-      </label>
-
-      <button id="convert-button" type="button">Converter</button>
-
-      <section>
-        <div class="currency-container">
-          <img src="./assets/Real.svg" alt="Bandeira do Brasil">
-          <p class="currency-name">Real</p>
-          <p class="currency-value" id="real-value-text">R$ 10.000,00</p>
+    <main class="converter-box">
+      <h2>Conversor de Moedas</h2>
+      
+      <div class="input-group">
+        <label for="input-amount">Quantidade</label>
+        <div class="input-wrapper">
+          <input id="input-amount" type="text" placeholder="Digite o valor">
+          <div class="select-wrapper">
+            <img id="from-flag" src="./assets/Real.svg" alt="Bandeira" class="flag-icon">
+            <select id="currency-from-select">
+              <option value="BRL" data-flag="./assets/Real.svg">BRL</option>
+              <option value="USD" data-flag="./assets/Dolar.svg">USD</option>
+              <option value="EUR" data-flag="./assets/Euro.svg">EUR</option>
+              <option value="BTC" data-flag="./assets/Bitcoin.svg">BTC</option>
+            </select>
+          </div>
         </div>
+      </div>
 
-        <img class="arrow-img" src="./assets/Arrow.png" alt="Seta virada para baixo">
+      <button id="invert-button" type="button" title="Inverter">↑↓</button>
 
-        <div class="currency-container">
-          <img src="./assets/Dolar.svg" id="currency-img" alt="Bandeira país conversão">
-          <p class="currency-name" id="currency-name">Dólar americano</p>
-          <p class="currency-value" id="currency-value-text">US$ 2.000,00</p>
+      <div class="input-group">
+        <label for="output-amount">Converter para</label>
+        <div class="input-wrapper">
+          <input id="output-amount" type="text" disabled>
+          <div class="select-wrapper">
+            <img id="to-flag" src="./assets/Dolar.svg" alt="Bandeira" class="flag-icon">
+            <select id="currency-to-select">
+              <option value="USD" data-flag="./assets/Dolar.svg">USD</option>
+              <option value="BRL" data-flag="./assets/Real.svg">BRL</option>
+              <option value="EUR" data-flag="./assets/Euro.svg">EUR</option>
+              <option value="BTC" data-flag="./assets/Bitcoin.svg">BTC</option>
+            </select>
+          </div>
         </div>
-      </section>
+      </div>
+
+      <div class="conversion-result">
+        <p id="conversion-rate">R$1.000 BRL = $0,1703 USD</p>
+        <p id="exchange-time">Câmbio comercial às 17:58 UTC</p>
+      </div>
+      <footer>
+        <p>Desenvolvido por: [Seu Nome]</p>
+      </footer>
     </main>
   </div>
 </body>
