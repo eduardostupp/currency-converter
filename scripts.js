@@ -1,4 +1,5 @@
 const invertButton = document.getElementById('invert-button');
+const convertButton = document.getElementById('convert-button'); // Referência ao novo botão
 const inputAmount = document.getElementById('input-amount');
 const outputAmount = document.getElementById('output-amount');
 const selectFrom = document.getElementById('currency-from-select');
@@ -36,6 +37,7 @@ const convertValuesBatch = (amounts, rates, fromCurrency, toCurrency) => {
     return amounts.map(amount => convertCurrency(amount, rates, fromCurrency, toCurrency));
 };
 
+// Função de conversão que será chamada quando o botão "Converter" for clicado
 const convertValues = async () => {
     let moedas = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then(result => result.json());
 
@@ -48,7 +50,7 @@ const convertValues = async () => {
 
     const fromCurrency = selectFrom.value;
     const toCurrency = selectTo.value;
-
+    
     // Obtém os valores do campo de entrada
     const amountsArray = inputAmount.value.split(',').map(value => validateInput(value.trim())).filter(value => value !== null);
 
@@ -97,26 +99,17 @@ inputAmount.addEventListener('blur', () => {
     } else {
         inputAmount.value = '';
     }
-    convertValues(); // Atualiza a conversão
 });
 
-// Eventos
+// Adicionando evento ao botão de conversão
+convertButton.addEventListener('click', convertValues);
+
 invertButton.addEventListener('click', () => {
     const tempValue = selectFrom.value;
     selectFrom.value = selectTo.value;
     selectTo.value = tempValue;
 
     updateFlags();
-    convertValues();
 });
 
-// Permite que o usuário digite o valor normalmente
-selectFrom.addEventListener('change', () => {
-    updateFlags();
-    convertValues();
-});
-
-selectTo.addEventListener('change', () => {
-    updateFlags();
-    convertValues();
-});
+// Eventos de sel
