@@ -1,12 +1,12 @@
-body {
-  background-color: #e0f7fa; /* Azul claro */
+/* Define a altura completa da tela e centraliza o conteúdo */
+html, body {
+  height: 100%;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
   font-family: 'Roboto', sans-serif;
+  background-color: #e0f7fa; /* Azul claro */
 }
 
 .container {
@@ -109,21 +109,21 @@ button#invert-button:hover {
 }
 
 button#convert-button {
-    background-color: #4caf50; /* Verde do iOS */
-    color: #ffffff; /* Texto branco */
-    border: none;
-    border-radius: 12px; /* Cantos arredondados */
-    padding: 12px; /* Aumentar padding para conforto */
-    font-size: 18px; /* Tamanho da fonte */
-    margin: 20px 0; /* Margem para separar dos outros elementos */
-    cursor: pointer;
-    display: block; /* Centralizado */
-    width: 100%; /* Ocupa toda a largura disponível */
-    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+  background-color: #4caf50; /* Verde do iOS */
+  color: #ffffff; /* Texto branco */
+  border: none;
+  border-radius: 12px; /* Cantos arredondados */
+  padding: 12px; /* Aumentar padding para conforto */
+  font-size: 18px; /* Tamanho da fonte */
+  margin: 20px 0; /* Margem para separar dos outros elementos */
+  cursor: pointer;
+  display: block; /* Centralizado */
+  width: 100%; /* Ocupa toda a largura disponível */
+  transition: background-color 0.3s; /* Transição suave para a cor de fundo */
 }
 
 button#convert-button:hover {
-    background-color: #45a049; /* Tom mais escuro de verde no hover */
+  background-color: #45a049; /* Tom mais escuro de verde no hover */
 }
 
 .conversion-result {
@@ -143,36 +143,36 @@ footer {
 
 @media (max-width: 480px) {
   .container {
-      padding: 15px;
+    padding: 15px;
   }
 
   .converter-box {
-      padding: 15px;
+    padding: 15px;
   }
 
   h2 {
-      font-size: 18px;
+    font-size: 18px;
   }
 
   input[type="number"],
   input[type="text"],
   select {
-      font-size: 14px;
-      padding: 10px;
-      padding-left: 40px;
+    font-size: 14px;
+    padding: 10px;
+    padding-left: 40px;
   }
 
   button#invert-button {
-      width: 40px;
-      height: 40px;
-      font-size: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
   }
 
   button#convert-button {
-      font-size: 16px;
+    font-size: 16px;
   }
 
   .conversion-result {
-      padding: 10px;
+    padding: 10px;
   }
 }
