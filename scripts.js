@@ -84,6 +84,10 @@ const updateFlags = () => {
     toFlag.src = toFlagSrc;
 };
 
+// Adicionando eventos de 'change' para atualizar as bandeiras automaticamente
+selectFrom.addEventListener('change', updateFlags);
+selectTo.addEventListener('change', updateFlags);
+
 // Função para permitir apenas números e vírgula
 inputAmount.addEventListener('input', () => {
     // Permite apenas números e vírgulas
@@ -111,5 +115,3 @@ invertButton.addEventListener('click', () => {
 
     updateFlags();
 });
-
-// Eventos de sel
