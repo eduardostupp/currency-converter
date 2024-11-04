@@ -17,9 +17,10 @@ const formatCurrency = (value) => {
     }).format(value);
 };
 
-// Função pura para validar se o valor é numérico e positivo
+// Função pura para validar se o valor é numérico e positivo, lidando com separadores de milhar
 const validateInput = (value) => {
-    const numberValue = parseFloat(value.replace('R$', '').replace('.', '').replace(',', '.').trim());
+    // Remove o símbolo da moeda, separadores de milhar e converte a vírgula em ponto
+    const numberValue = parseFloat(value.replace(/R\$/g, '').replace(/\./g, '').replace(',', '.').trim());
     return !isNaN(numberValue) && numberValue > 0 ? numberValue : null;
 };
 
