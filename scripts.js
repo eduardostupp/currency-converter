@@ -19,16 +19,21 @@ const formatCurrency = (value) => {
 // Função pura para validar se o valor é numérico e positivo
 const validateInput = (value) => {
     const numberValue = parseFloat(value.replace('R$', '').replace('.', '').replace(',', '.').trim());
-    return !isNaN(numberValue) && numberValue >= 0 ? numberValue : null;
+    return !isNaN(numberValue) && numberValue > 0 ? numberValue : null;
 };
 
 // Função pura para converter valores
 const convertCurrency = (amount, rates, fromCurrency, toCurrency) => {
     if (fromCurrency === toCurrency) {
-        return amount; // Retorna o mesmo valor se as moedas forem iguais
+        return amount; // Se as moedas forem iguais, retorna o mesmo valor
     }
-    const amountInBRL = amount / rates[fromCurrency];
-    return amountInBRL * rates[toCurrency];
+    const amountInBRL = amount * rates[fromCurrency]; // Converte o valor de entrada para BRL
+    return amountInBRL / rates[toCurrency]; // Retorna o valor convertido
+};
+
+// Função para converter uma lista de valores
+const convertValuesBatch = (amounts, rates, fromCurrency, toCurrency) => {
+    return amounts.map(amount => convertCurrency(amount, rates, fromCurrency, toCurrency));
 };
 
 const convertValues = async () => {
@@ -43,20 +48,24 @@ const convertValues = async () => {
 
     const fromCurrency = selectFrom.value;
     const toCurrency = selectTo.value;
-    
-    // Validação de entrada
-    const amount = validateInput(inputAmount.value);
 
-    if (amount === null) {
-        outputAmount.value = 'Valor inválido';
+    // Obtém os valores do campo de entrada
+    const amountsArray = inputAmount.value.split(',').map(value => validateInput(value.trim())).filter(value => value !== null);
+
+    // Verifica se há valores válidos para conversão
+    if (amountsArray.length === 0) {
+        outputAmount.value = 'Nenhum valor válido inserido.';
         conversionRate.textContent = '';
         exchangeTime.textContent = '';
         return;
     }
 
-    const convertedAmount = convertCurrency(amount, rates, fromCurrency, toCurrency);
-    outputAmount.value = formatCurrency(convertedAmount);
-    conversionRate.textContent = `${formatCurrency(amount)} ${fromCurrency} = ${outputAmount.value} ${toCurrency}`;
+    // Converte os valores em lote
+    const convertedAmounts = convertValuesBatch(amountsArray, rates, fromCurrency, toCurrency);
+    outputAmount.value = convertedAmounts.map(amount => formatCurrency(amount)).join(', '); // Formata e junta os valores convertidos
+
+    // Atualiza a taxa de conversão
+    conversionRate.textContent = `${amountsArray.map(amount => formatCurrency(amount)).join(', ')} ${fromCurrency} = ${outputAmount.value} ${toCurrency}`;
 
     // Obtém a hora atual no formato desejado
     const now = new Date();
@@ -73,14 +82,10 @@ const updateFlags = () => {
     toFlag.src = toFlagSrc;
 };
 
-// Eventos
-invertButton.addEventListener('click', () => {
-    const tempValue = selectFrom.value;
-    selectFrom.value = selectTo.value;
-    selectTo.value = tempValue;
-
-    updateFlags();
-    convertValues();
+// Função para permitir apenas números e vírgula
+inputAmount.addEventListener('input', () => {
+    // Permite apenas números e vírgulas
+    inputAmount.value = inputAmount.value.replace(/[^0-9,]/g, '');
 });
 
 // Formatação de moeda ao perder o foco
@@ -95,12 +100,17 @@ inputAmount.addEventListener('blur', () => {
     convertValues(); // Atualiza a conversão
 });
 
-inputAmount.addEventListener('input', () => {
-    // Permite que o usuário digite o valor normalmente
-    // A formatação será aplicada ao perder o foco
-    convertValues(); // Atualiza a conversão
+// Eventos
+invertButton.addEventListener('click', () => {
+    const tempValue = selectFrom.value;
+    selectFrom.value = selectTo.value;
+    selectTo.value = tempValue;
+
+    updateFlags();
+    convertValues();
 });
 
+// Permite que o usuário digite o valor normalmente
 selectFrom.addEventListener('change', () => {
     updateFlags();
     convertValues();
